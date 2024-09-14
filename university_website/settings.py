@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'student.apps.StudentConfig',
+    'static_webpages.apps.StaticWebpagesConfig',
     'crispy_forms',
     'crispy_bootstrap4',
 ]

@@ -14,11 +14,13 @@
             <div class="col-lg-8 col-xl-6">
                 <div class="card rounded-3" style="margin-bottom: 50px;">
                     <div class="card-body p-4 p-md-5">
-                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Start Your Journey!</h3>
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Start your Journey!</h3>
                         <form method="post">
                             {% csrf_token %}
                             {{ form | crispy }}
                             <button type="submit" class="btn btn-outline-dark">Submit</button>
+                            <button type="button" class="btn btn-outline-dark"><a href="{% url 'static_webpages:main' %}" class="button-link">Cancel</a></button>
+                            <button style="float: right" type="button" class="btn btn-outline-dark">Log in</button>
                         </form>
                     </div>
                 </div>

@@ -1,15 +1,14 @@
-from django.shortcuts import render, redirect
+from django.views.generic import FormView
+
 from .forms import RegisterForm
 
-def main(request):
-    return render(request, "main.html")
 
-def register(request):
-    form = RegisterForm()
-    if request.method == "POST":
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            instance = form.save()
-            instance.profile.save()
-            return redirect("main")
-    return render(request, "users/registration.html", {'form': form})
+class RegisterView(FormView):
+    template_name = "users/registration.html"
+    form_class = RegisterForm
+    success_url = "main"
+
+    def form_valid(self, form):
+        instance = form.save()
+        instance.profile.save()
+        return super().form_valid(form)

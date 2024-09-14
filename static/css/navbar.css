@@ -1,0 +1,125 @@
+body {
+		font-family: "Century Gothic", 'Lato', sans-serif;
+}
+
+a {
+	text-decoration: none;
+}
+
+.et-hero-tabs,
+.et-slide {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+    background: #eee;
+		text-align: center;
+		padding: 0 2em;
+    h1 {
+        font-size: 2rem;
+        margin: 0;
+        letter-spacing: 1rem;
+    }
+    h3 {
+        font-size: 1rem;
+        letter-spacing: 0.3rem;
+        opacity: 0.6;
+    }
+}
+
+.et-hero-tabs-container {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 70px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    z-index: 10;
+    &--top {
+        position: fixed;
+        top: 0;
+    }
+}
+
+.et-hero-tab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    color: #000;
+    letter-spacing: 0.1rem;
+		transition: all 0.5s ease;
+		font-size: 0.8rem;
+	  &:hover {
+			color:white;
+      background: rgba(0,0,128,0.8);
+			transition: all 0.5s ease;
+    }
+}
+
+.et-hero-tab-slider {
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    height: 6px;
+    background: #191970;
+    transition: left 0.3s ease;
+}
+
+.et-hero-tabs-container--top {
+    position: fixed;
+    top: 0;
+}
+
+.content-container {
+    max-width: 450px !important; /* Ensure it takes priority */
+    margin: 0 auto !important;
+    padding: 0 20px !important; /* Optional padding */
+    text-align: center; /* Center text if desired */
+}
+.btn {
+    border: 1px solid #000; /* Example border color */
+    background-color: transparent; /* Button background */
+    color: #000; /* Text color */
+    padding: 10px 20px; /* Button padding */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor */
+    display: inline-block; /* Inline block for button-like appearance */
+}
+
+.btn-outline-dark {
+    border-color: #000; /* Button border color */
+}
+
+.btn a.button-link {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Inherit color from button */
+    display: inline !important; /* Ensure link behaves like text */
+}
+
+.btn:hover a.button-link {
+    color: #fff; /* Ensure text color stays white on hover */
+}
+
+.btn a.button-link:hover {
+    color: #fff; /* Optional: change color on hover */
+}
+
+@media (min-width: 800px) {
+	.et-hero-tabs,
+	.et-slide {
+    h1 {
+        font-size: 3rem;
+    }
+    h3 {
+        font-size: 1rem;
+    }
+	}
+	.et-hero-tab {
+		font-size: 1rem;
+	}
+}
