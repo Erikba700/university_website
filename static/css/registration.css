@@ -1,0 +1,19 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #343a40 !important;
+}
+
+section.h-100 {
+    height: 100vh; /* Full viewport height */
+    background-color: #343a40; /* Ensures the section's background is gray */
+    padding-bottom: 100px; /* Increases space at the bottom of the section */
+
+}
+
+@media (min-width: 1025px) {
+.h-custom {
+height: 100vh !important;
+}
+}
