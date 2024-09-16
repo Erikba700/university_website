@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register | BlankUniversity</title>
     <link rel="stylesheet" href="{% static 'css/registration.css' %}">
+    <link rel="stylesheet" href="{% static 'css/additionButton.css' %}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -28,4 +29,8 @@
         </div>
     </div>
 </section>
+    <div class="return-arrow" id="returnButton" data-url="{% url 'static_webpages:main' %}">
+        <i class="my-float">←</i>
+    </div>
+<script src="{% static 'js/redirect.js' %}" defer></script>
 </body>

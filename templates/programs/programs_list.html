@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>University Programs - BlankUniversity</title>
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/additionButton.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<section class="et-hero-tabs">
+    <h1>Our University Programs</h1>
+    <h3>Explore our wide range of academic offerings</h3>
+    <div class="et-hero-tabs-container">
+        {% for program in programs %}
+        <a class="et-hero-tab" href="{% url 'programs:program-detail' program.pk %}">{{ program.name }}</a><br>
+        {% endfor %}
+        <span class="et-hero-tab-slider"></span>
+    </div>
+    <div class="float">
+            <i class="my-float">+</i>
+            <div class="login-option">
+                    <a href="/login">login</a>
+            </div>
+        </div>
+    <div class="return-arrow" id="returnButton" data-url="{% url 'static_webpages:main' %}">
+        <i class="my-float">←</i>
+    </div>
+</section>
+<script src="{% static 'js/redirect.js' %}" defer></script>
+</body>
+</html>

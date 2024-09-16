@@ -5,6 +5,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from programs.models import Program
 
 
 class StudyFields(models.Model):
@@ -29,7 +30,7 @@ class StudentProfile(models.Model):
         ]
     )
     image = models.ImageField()
-    study_field = models.ForeignKey('ChosenStudyField', on_delete=models.PROTECT)
+    chosen_major = models.ForeignKey(Program, on_delete=models.PROTECT)
 
     def __str__(self):
         return f"Student: {self.user.first_name} {self.user.last_name}"

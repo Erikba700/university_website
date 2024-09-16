@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>BlankUniversity</title>
     <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/additionButton.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
@@ -13,21 +14,21 @@
     <h1>OUR CONTACTS</h1>
     <h3>You can reach us via phone and email</h3>
     <div class="et-hero-tabs-container">
-        <a class="et-hero-tab" href="#tab-programs">Phone</a>
-        <a class="et-hero-tab" href="#tab-campus">Email</a>
-        <a class="et-hero-tab" href="#" >Return</a>
+        <a class="et-hero-tab" href="#tab-phone">Phone</a>
+        <a class="et-hero-tab" href="#tab-email">Email</a>
+        <a class="et-hero-tab" href="#tab-socials" >Social Networks</a>
         <span class="et-hero-tab-slider"></span>
     </div>
 </section>
 <main class="et-main">
-    <section class="et-slide" id="tab-programs">
-            <h1>Phone Number</h1><br>
+    <section class="et-slide" id="tab-phone">
+            <h1>Phone Number 🕿</h1><br>
         <div class="content-container">
             <p> (+374) 010 - 00 - 00 - 00 </p>
         </div>
     </section>
-    <section class="et-slide" id="tab-campus">
-            <h1>Email</h1><br>
+    <section class="et-slide" id="tab-email">
+            <h1>Email ➤</h1><br>
         <div class="content-container">
             {% if user.is_active %}
             <p>BlankUniversity@yopmail.com</p><br>
@@ -38,7 +39,25 @@
             {% endif %}
         </div>
     </section>
+    <section class="et-slide" id="tab-socials">
+            <h1>Our Social Networks 🔗</h1><br>
+        <div class="content-container">
+            <p> Facebook: </p>
+            <p> Instagram: </p>
+            <p> TikTok: </p>
+        </div>
+    </section>
+    <div class="float">
+            <i class="my-float">+</i>
+            <div class="login-option">
+                    <a href="/login">login</a>
+            </div>
+        </div>
+    <div class="return-arrow" id="returnButton" data-url="{% url 'static_webpages:main' %}">
+        <i class="my-float">←</i>
+    </div>
 </main>
 <script src="{% static 'js/navbar.js' %}" defer></script>
+<script src="{% static 'js/redirect.js' %}" defer></script>
 </body>
 </html>
