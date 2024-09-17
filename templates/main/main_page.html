@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BlankUniversity</title>
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/additionButton.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<!-- Hero -->
+<section class="et-hero-tabs">
+    <h1>WELCOME TO BLANK UNIVERSITY</h1>
+    <h3>Empowering Futures through Education</h3>
+    <div class="et-hero-tabs-container">
+        <a class="et-hero-tab" href="#tab-programs">Programs</a>
+        <a class="et-hero-tab" href="#tab-campus">Campus Life</a>
+        <a class="et-hero-tab" href="#tab-admissions">Student</a>
+        <a class="et-hero-tab" href="#tab-faculty">Institutes</a>
+        <a class="et-hero-tab" href="#tab-contact">Contact Us</a>
+        <span class="et-hero-tab-slider"></span>
+    </div>
+</section>
+
+<!-- Main -->
+<main class="et-main">
+    <section class="et-slide" id="tab-programs">
+            <h1>Our Programs</h1><br>
+        <div class="content-container">
+            <p>Explore diverse undergraduate and graduate programs designed for your success. Choose from fields like science, technology, business, arts, and more. <button type="button" class="btn btn-outline-dark"><a href="{% url 'programs:program-list' %}" class="button-link">Learn more about our programs</a></button></p>
+        </div>
+    </section>
+    <section class="et-slide" id="tab-campus">
+            <h1>Campus Life</h1><br>
+        <div class="content-container">
+            <p>Experience a vibrant student life with various organizations, events, and facilities. From sports to arts, there’s something for everyone. Discover our <button type="button" class="btn btn-outline-dark"><a href="{% url 'static_webpages:campus' %}" class="button-link">student activities</a></button></p>
+        </div>
+    </section>
+    <section class="et-slide" id="tab-admissions">
+            <h1>Already a Student?</h1><br>
+        <div class="content-container">
+            <p>Ready to join us? Our simple registration process is designed to guide you smoothly. <button type="button" class="btn btn-outline-dark"><a href="{% url 'student:registration' %}" class="button-link">Create your student account</a></button></p>
+        </div>
+    </section>
+    <section class="et-slide" id="tab-faculty">
+            <h1>Meet Our Institutes</h1><br>
+        <div class="content-container">
+            <p>Our institute members are committed to your success. Learn more about their backgrounds and areas of expertise. Visit our <button type="button" class="btn btn-outline-dark"><a href="#" class="button-link">Institute directory</a></button></p>
+        </div>
+    </section>
+    <section class="et-slide" id="tab-contact">
+            <h1>Contact Us</h1><br>
+        <div class="content-container">
+            <p>Have questions? We’re here to help. <button type="button" class="btn btn-outline-dark"><a href="{% url 'static_webpages:contact' %}" class="button-link">Contact Us</a></button></p>
+        </div>
+    </section>
+    <div class="float">
+        <i class="my-float">+</i>
+        <div class="login-option">
+                <a href="/login">login</a>
+        </div>
+    </div>
+</main>
+
+
+
+<!-- Include navbar.js just before closing body -->
+<script src="{% static 'js/navbar.js' %}" defer></script>
+
+{% block content_website %}
+{% endblock %}
+</body>
+</html>

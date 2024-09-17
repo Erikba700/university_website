@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ program.name }} - BlankUniversity</title>
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/additionButton.css' %}">
+    <link rel="stylesheet" href="{% static 'css/detail_page.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <section class="et-hero-tabs">
+        <h1>{{ program.name }}</h1><br>
+        <h3>Explore the {{ program.name }} program details</h3><br><br>
+        <main class="container">
+        <h2>About {{ program.name }} Program</h2>
+        <h3 class="program-details">{{ program.details }}</h3>
+
+        <div class="test-list">
+            <h4>Required Tests and Minimum Grades</h4>
+            <ul class="list-group">
+                {% for test_requirement in program.test_requirements.all %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ test_requirement.test.name }}
+                        <span class="badge badge-min-grade">Minimum Grade: {{ test_requirement.minimum_grade }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="return-button">
+            <a href="{% url 'programs:program-list' %}">← Return</a>
+        </div>
+
+    </main>
+    </section>
+
+    <script src="{% static 'js/navbar.js' %}" defer></script>
+</body>
+</html>
