@@ -7,18 +7,43 @@
     <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
     <link rel="stylesheet" href="{% static 'css/additionButton.css' %}">
     <link rel="stylesheet" href="{% static 'css/listing.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
+    <link rel="stylesheet" href="{% static 'css/list_pagination.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 <section class="et-hero-tabs">
     <h1>Our University Programs</h1>
-    <h3>Explore our wide range of academic offerings</h3>
-    <div class="et-hero-tabs-container">
-        {% for program in programs %}
-        <a class="et-hero-tab" href="{% url 'programs:program-detail' program.pk %}">{{ program.name }}</a>
-        {% endfor %}
-        <span class="et-hero-tab-slider"></span>
+    <h3>Explore our wide range of academic offerings</h3><br><br>
+    <form class="search-form" method="GET" action="{% url 'programs:program-search' %}">
+        <input type="text" class="search-input" name="q" placeholder="Search programs..." value="{{ request.GET.q }}">
+        <button type="submit" class="search-button">Search</button>
+    </form>
+    {% if query %}
+        {% if results %}
+            <ul>
+            {% for result in results %}
+                <div class="center">
+                    <a style="width:1100px;" class="et-hero-tab" href="{% url 'programs:program-detail' result.pk %}">{{ result.name }}</a>
+                </div>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No results found.</p>
+        {% endif %}
+    {% endif %}
+    {% for program in programs %}
+    <div class="center">
+        <a style="width:1100px;" class="et-hero-tab" href="{% url 'programs:program-detail' program.pk %}">{{ program.name }}</a>
+    </div>
+    {% endfor %}
+    <span class="et-hero-tab-slider"></span>
+    <div class="container">
+        <div class="custom-pagination-controls">
+            <div id="custom-prev-btn" class="custom-prev-arrow">←</div>
+            <div id="custom-next-btn" class="custom-next-arrow">→</div>
+        </div>
     </div>
     <div class="float">
         <i class="my-float">+</i>
@@ -30,7 +55,7 @@
         <i class="my-float">←</i>
     </div>
 </section>
-
+<script src="{% static 'js/list_pagination.js' %}" defer></script>
 <script src="{% static 'js/redirect.js' %}" defer></script>
 </body>
 </html>
