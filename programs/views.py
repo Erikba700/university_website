@@ -1,6 +1,6 @@
 from django.views.generic import ListView, DetailView
 
-from .models import Program
+from .models import Program, Institutes
 
 
 class ProgramListView(ListView):
@@ -31,4 +31,23 @@ class ProgramSearchView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['query'] = self.request.GET.get('q', '')
+        return context
+
+
+class InstitutesListView(ListView):
+    model = Institutes
+    template_name = 'programs/institutes_list.html'
+    context_object_name = 'institutes'
+
+
+class InstituteDetailView(DetailView):
+    model = Institutes
+    template_name = 'programs/institutes_details.html'
+    context_object_name = 'institute'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['programs'] = Program.objects.filter(institute=self.object)
+
         return context

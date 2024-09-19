@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>University Institutes - BlankUniversity</title>
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/additionButton.css' %}">
+    <link rel="stylesheet" href="{% static 'css/listing.css' %}">
+    <link rel="stylesheet" href="{% static 'css/list_pagination.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<section class="et-hero-tabs">
+    <h1>Our University Institutes</h1><br><br>
+    {% for institute in institutes %}
+    <div class="center">
+        <a style="width:1100px;" class="et-hero-tab" href="{% url 'programs:institute-detail' institute.pk %}">{{ institute.name }}</a>
+    </div>
+    {% endfor %}
+    <span class="et-hero-tab-slider"></span>
+    <div class="container">
+        <div class="custom-pagination-controls">
+            <div id="custom-prev-btn" class="custom-prev-arrow">←</div>
+            <div id="custom-next-btn" class="custom-next-arrow">→</div>
+        </div>
+    </div>
+    <div class="float">
+        <i class="my-float">+</i>
+        <div class="login-option">
+            <a href="/login">login</a>
+        </div>
+    </div>
+    <div class="return-arrow" id="returnButton" data-url="{% url 'static_webpages:main' %}">
+        <i class="my-float">←</i>
+    </div>
+</section>
+<script src="{% static 'js/list_pagination.js' %}" defer></script>
+<script src="{% static 'js/redirect.js' %}" defer></script>
+</body>
+</html>

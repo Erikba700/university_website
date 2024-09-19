@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
     <link rel="stylesheet" href="{% static 'css/additionButton.css' %}">
     <link rel="stylesheet" href="{% static 'css/detail_page.css' %}">
+    <link rel="stylesheet" href="{% static 'css/display.css' %}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
@@ -16,10 +17,9 @@
 <body>
     <section class="et-hero-tabs">
         <h1>{{ program.name }}</h1><br>
-        <h3>Explore the {{ program.name }} program details</h3><br><br>
+        <button id="showTextButton" class="btn btn-outline-dark">Explore the {{ program.name }} program details</button><br><br>
         <main class="container">
-        <h2>About {{ program.name }} Program</h2>
-        <h3 class="program-details">{{ program.details }}</h3>
+        <h3 id="hiddenText" class="program-details">{{ program.details }}</h3>
 
         <div class="test-list">
             <h4>Required Tests and Minimum Grades</h4>
@@ -32,14 +32,14 @@
                 {% endfor %}
             </ul>
         </div>
-
-        <div class="return-button">
-            <a href="{% url 'programs:program-list' %}">← Return</a>
+        <div class="return-arrow" id="returnButton" data-url="{% url 'programs:program-list' %}">
+            <i class="my-float">←</i>
         </div>
 
     </main>
     </section>
-
+    <script src="{% static 'js/redirect.js' %}"></script>
+    <script src="{% static 'js/text_dropdown.js' %}"></script>
     <script src="{% static 'js/navbar.js' %}" defer></script>
 </body>
 </html>

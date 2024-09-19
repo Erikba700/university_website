@@ -19,24 +19,7 @@
 }
 
 .badge-min-grade {
-    background-color: #28a745;
+    background-color: GRAY;
     color: #fff;
     font-size: 14px;
-}
-
-.return-button {
-    margin-top: 30px;
-    text-align: center;
-}
-
-.return-button a {
-    color: #fff;
-    background-color: #343a40;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-}
-
-.return-button a:hover {
-    background-color: #212529;
 }

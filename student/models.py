@@ -8,19 +8,6 @@ from django.dispatch import receiver
 from programs.models import Program
 
 
-class StudyFields(models.Model):
-    course_name = models.CharField(max_length=100)
-
-
-class ChosenStudyField(models.Model):
-    course_choice = [("math_analyses", "Math Analyses")]
-    # course_choice = [(c.course.replace(" ", "_").lower, c.course) for c in list(StudyFields.objects.all())]
-    chosen_course = models.CharField(max_length=100, choices=course_choice)
-
-    def __str__(self):
-        return self.chosen_course
-
-
 class StudentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     admission_year = models.IntegerField(
