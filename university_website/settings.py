@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'student.apps.StudentConfig',
     'programs.apps.ProgramsConfig',
     'static_webpages.apps.StaticWebpagesConfig',
+    'rest_framework', 
     'crispy_forms',
     'crispy_bootstrap4',
 ]
