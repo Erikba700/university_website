@@ -1,6 +1,14 @@
 from django.db import models
 
 
+class Institutes(models.Model):
+    name = models.CharField(max_length=200)
+    description = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Test(models.Model):
     name = models.CharField(max_length=300)
 
@@ -10,8 +18,9 @@ class Test(models.Model):
 
 class Program(models.Model):
     name = models.CharField(max_length=200)
-    details = models.CharField(max_length=550)
+    details = models.TextField(max_length=550)
     tests = models.ManyToManyField(Test, through='ProgramTestRequirement', related_name='programs')
+    institute = models.ForeignKey(Institutes, on_delete=models.CASCADE, related_name='institute', null=True, blank=True)
 
     def __str__(self):
         return self.name

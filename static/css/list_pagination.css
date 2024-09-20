@@ -1,0 +1,37 @@
+/* Pagination Controls */
+.custom-pagination-controls {
+    display: flex;
+    justify-content: center; /* Center the buttons horizontally */
+    align-items: center; /* Align buttons vertically */
+    gap: 10px; /* Add space between the buttons */
+    margin-top: 20px; /* Margin above the buttons */
+    margin-bottom: 10px; /* Margin below the buttons */
+    position: relative; /* Position relative for alignment */
+}
+
+/* Container for pagination controls, if used */
+.container {
+    padding-bottom: 10px; /* Ensures space at the bottom of the page */
+}
+
+/* Styling for previous and next buttons */
+.custom-prev-arrow, .custom-next-arrow {
+    background-color: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    cursor: pointer;
+    color: #000;
+    font-size: 24px; /* Adjust font size for arrows */
+}
+
+/* Hover effects for pagination buttons */
+.custom-prev-arrow:hover, .custom-next-arrow:hover {
+    background-color: #000;
+    color: #fff;
+}

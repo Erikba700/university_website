@@ -3,39 +3,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>University Programs - BlankUniversity</title>
+    <title>University Institutes - BlankUniversity</title>
     <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
     <link rel="stylesheet" href="{% static 'css/additionButton.css' %}">
     <link rel="stylesheet" href="{% static 'css/listing.css' %}">
-    <link rel="stylesheet" href="{% static 'css/search.css' %}">
     <link rel="stylesheet" href="{% static 'css/list_pagination.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 <section class="et-hero-tabs">
-    <h1>Our University Programs</h1>
-    <h3>Explore our wide range of academic offerings</h3><br><br>
-    <form class="search-form" method="GET" action="{% url 'programs:program-search' %}">
-        <input type="text" class="search-input" name="q" placeholder="Search programs..." value="{{ request.GET.q }}">
-        <button type="submit" class="search-button">Search</button>
-    </form>
-    {% if query %}
-        {% if results %}
-            <ul>
-            {% for result in results %}
-                <div class="center">
-                    <a style="width:1100px;" class="et-hero-tab" href="{% url 'programs:program-detail' result.pk %}">{{ result.name }}</a>
-                </div>
-            {% endfor %}
-            </ul>
-        {% else %}
-            <p>No results found.</p>
-        {% endif %}
-    {% endif %}
-    {% for program in programs %}
+    <h1>Our University Institutes</h1><br><br>
+    {% for institute in institutes %}
     <div class="center">
-        <a style="width:1100px;" class="et-hero-tab" href="{% url 'programs:program-detail' program.pk %}">{{ program.name }}</a>
+        <a style="width:1100px;" class="et-hero-tab" href="{% url 'programs:institute-detail' institute.pk %}">{{ institute.name }}</a>
     </div>
     {% endfor %}
     <span class="et-hero-tab-slider"></span>

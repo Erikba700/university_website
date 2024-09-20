@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ institute.name }} - BlankUniversity</title>
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/additionButton.css' %}">
+    <link rel="stylesheet" href="{% static 'css/detail_page.css' %}">
+    <link rel="stylesheet" href="{% static 'css/display.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+
+    </style>
+</head>
+<body>
+<section class="et-hero-tabs">
+    <h2>{{ institute.name }}</h2><br>
+    <button id="showTextButton" class="btn btn-outline-dark">Explore the {{ institute.name }} details</button>
+    <main class="container">
+        <h3 id="hiddenText" class="program-details">{{ institute.description }}</h3>
+    </main>
+    <br><br>
+    {% for program in programs %}
+    <div class="center">
+        <a style="width:1100px;" class="btn btn-outline-dark" href="{% url 'programs:program-detail' program.pk %}">{{ program.name }}</a><br>
+    </div>
+    {% endfor %}
+    <div class="return-arrow" id="returnButton" data-url="{% url 'programs:institute-list' %}">
+        <i class="my-float">←</i>
+    </div>
+</section>
+<script src="{% static 'js/redirect.js' %}"></script>
+<script src="{% static 'js/text_dropdown.js' %}"></script>
+<script src="{% static 'js/navbar.js' %}" defer></script>
+</body>
+</html>
