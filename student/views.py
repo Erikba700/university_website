@@ -1,4 +1,4 @@
-from django.views.generic import FormView
+from django.views.generic import FormView, TemplateView
 
 from .forms import RegisterForm
 
@@ -12,3 +12,6 @@ class RegisterView(FormView):
         instance = form.save()
         instance.profile.save()
         return super().form_valid(form)
+
+class StudentMainPageView(TemplateView):
+    template_name = "users/student_main.html"
