@@ -16,21 +16,19 @@
                 <div class="card rounded-3" style="margin-bottom: 50px;">
                     <div class="card-body p-4 p-md-5">
                         <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Start your Journey!</h3>
-                        <form method="post">
+                        <form method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             {{ form | crispy }}
-                            <button type="submit" class="btn btn-outline-dark">Submit</button>
-                            <button type="button" class="btn btn-outline-dark"><a href="{% url 'static_webpages:main' %}" class="button-link">Cancel</a></button>
-                            <button style="float: right" type="button" class="btn btn-outline-dark">Log in</button>
+                            <button type="submit" class="btn btn-outline-dark" id="returnButton" data-url="{% url 'static_webpages:main' %}">Submit</button>
+                            <a href="{% url 'static_webpages:main' %}" class="btn btn-outline-dark">Cancel</a>
+                            <button type="button" style="float: right" class="btn btn-outline-dark">Log in</button>
                         </form>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-    <div class="return-arrow" id="returnButton" data-url="{% url 'static_webpages:main' %}">
-        <i class="my-float">←</i>
-    </div>
 <script src="{% static 'js/redirect.js' %}" defer></script>
 </body>
