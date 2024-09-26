@@ -21,9 +21,8 @@
                             {{ form | crispy }}
                             <button type="submit" class="btn btn-outline-dark" id="returnButton" data-url="{% url 'static_webpages:main' %}">Submit</button>
                             <a href="{% url 'static_webpages:main' %}" class="btn btn-outline-dark">Cancel</a>
-                            <button type="button" style="float: right" class="btn btn-outline-dark">Log in</button>
+                            <a href="{% url 'student:login' %}" style="float: right" class="btn btn-outline-dark">Log in</a>
                         </form>
-
                     </div>
                 </div>
             </div>

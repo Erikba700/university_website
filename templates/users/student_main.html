@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{% static 'css/studentSidebar.css' %}">
+    <link rel="stylesheet" href="css/calendar.css">
+    <script src="js/calendar.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <title>Title</title>
+    <title>Student Profile</title>
 </head>
 <body>
 <header>
@@ -21,8 +23,8 @@
                     <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Main dashboard</span>
                 </a>
                 <a href="#" class="list-group-item list-group-item-action py-2 ripple"
-                ><i class="fas fa-globe fa-fw me-3"></i><span>International</span></a>
-                <a href="#" class="list-group-item list-group-item-action py-2 ripple"
+                ><i class="fas fa-globe fa-fw me-3"></i><span>International {{ student_data.pk }}</span></a>
+                <a href="{% url 'student:studentCalendar' student_data.pk %}" class="list-group-item list-group-item-action py-2 ripple"
                 ><i class="fas fa-calendar fa-fw me-3"></i><span>Calendar</span></a>
             </div>
         </div>
@@ -92,17 +94,17 @@
                 </li>
             </ul>
         </div>
-        <!-- Container wrapper -->
     </nav>
-    <!-- Navbar -->
-</header>
-<!--Main Navigation-->
 
-<!--Main layout-->
+</header>
+
 <main style="margin-top: 58px;">
+    {% block content %}
+    {% endblock %}
     <div class="container pt-4"></div>
 </main>
-<!--Main layout-->
+
+
 <script src="{% static 'js/studentSidebar.js' %}"></script>
 </body>
 </html>

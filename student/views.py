@@ -1,10 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.views import LoginView
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy, reverse
-from django.views import View
 from django.views.generic import FormView, TemplateView
 
 from .forms import RegisterForm, UserLoginForm
@@ -54,9 +52,13 @@ class StudentMainPageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
         student_pk = self.kwargs.get('pk')
-        student_profile = get_object_or_404(StudentProfile, user__id=student_pk)
+        student_profile = get_object_or_404(StudentProfile, pk=student_pk)
 
         context['student_data'] = student_profile
+
         return context
+
+
+class StudentCalendarPageView(TemplateView):
+    template_name = "users/calendar.html"
