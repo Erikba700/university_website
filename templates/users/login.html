@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register | BlankUniversity</title>
+    <title>Login | BlankUniversity</title>
     <link rel="stylesheet" href="{% static 'css/registration.css' %}">
     <link rel="stylesheet" href="{% static 'css/additionButton.css' %}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -15,14 +15,15 @@
             <div class="col-lg-8 col-xl-6">
                 <div class="card rounded-3" style="margin-bottom: 50px;">
                     <div class="card-body p-4 p-md-5">
-                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Start your Journey!</h3>
-                        <form method="post" enctype="multipart/form-data">
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Login to your student account</h3>
+                        <form method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             {{ form | crispy }}
-                            <button type="submit" class="btn btn-outline-dark" id="returnButton" data-url="{% url 'static_webpages:main' %}">Submit</button>
+                            <button type="submit" class="btn btn-outline-dark" id="returnButton" data-url="{% url 'static_webpages:main' %}">Log in</button>
                             <a href="{% url 'static_webpages:main' %}" class="btn btn-outline-dark">Cancel</a>
-                            <a href="{% url 'student:login' %}" style="float: right" class="btn btn-outline-dark">Log in</a>
+                            <a href="{% url 'student:registration' %}" style="float: right" class="btn btn-outline-dark">Sign up</a>
                         </form>
+
                     </div>
                 </div>
             </div>

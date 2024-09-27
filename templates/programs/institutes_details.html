@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{% static 'css/additionButton.css' %}">
     <link rel="stylesheet" href="{% static 'css/detail_page.css' %}">
     <link rel="stylesheet" href="{% static 'css/display.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nonClickableButtons.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
@@ -24,7 +25,7 @@
     <br><br>
     {% for program in programs %}
     <div class="center">
-        <a style="width:1100px;" class="btn btn-outline-dark" href="{% url 'programs:program-detail' program.pk %}">{{ program.name }}</a><br>
+        <a href="{% url 'programs:program-detail' program.pk %}"><button class="button-85" role="button" style="width:500px;" >{{ program.name }}</button></a><br><br>
     </div>
     {% endfor %}
     <div class="return-arrow" id="returnButton" data-url="{% url 'programs:institute-list' %}">
