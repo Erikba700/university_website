@@ -1,8 +1,9 @@
 from django.contrib import messages
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy, reverse
+from django.views import View
 from django.views.generic import FormView, TemplateView
 
 from .forms import RegisterForm, UserLoginForm
@@ -25,6 +26,7 @@ class UserLoginView(FormView):
     template_name = 'users/login.html'
 
     def get_success_url(self):
+        print(self.request.user.pk)
         return reverse('student:studentMain', kwargs={'pk': self.request.user.pk})
 
     def form_valid(self, form):
@@ -32,18 +34,24 @@ class UserLoginView(FormView):
         password = form.cleaned_data.get('password')
 
         user = authenticate(self.request, username=username, password=password)
-
-        if user is not None:
-            if user.is_active:
-                login(self.request, user)
-                return HttpResponseRedirect(self.get_success_url())
-            else:
-                return HttpResponse('Disabled account')
-        else:
+        if user is None:
             return HttpResponse('Invalid login')
 
+        if not user.is_active:
+            return HttpResponse('Disabled account')
+
+        login(self.request, user)
+        return HttpResponseRedirect(self.get_success_url())
+
     def form_invalid(self, form):
-        return HttpResponse('Invalid login')
+        messages.error(self.request, 'Invalid login')
+        return self.render_to_response(self.get_context_data(form=form))
+
+
+class UserLogoutView(View):
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return HttpResponseRedirect(reverse('static_webpages:main'))
 
 
 class StudentMainPageView(TemplateView):
@@ -52,8 +60,8 @@ class StudentMainPageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        student_pk = self.kwargs.get('pk')
-        student_profile = get_object_or_404(StudentProfile, pk=student_pk)
+        user_pk = self.kwargs.get('pk')
+        student_profile = get_object_or_404(StudentProfile, user_id=user_pk)
 
         context['student_data'] = student_profile
 

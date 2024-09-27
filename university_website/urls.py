@@ -9,7 +9,7 @@ urlpatterns = [
     path('student/', include('student.urls')),
     path('', include('static_webpages.urls')),
     path('structure/', include('programs.urls')),
-    path('api/', include('programs.api.urls', namespace = 'api-programs'))
+    path('api/', include('programs.api.urls', namespace='api-programs'))
 ]
 
 if settings.DEBUG:
