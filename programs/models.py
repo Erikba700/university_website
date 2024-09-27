@@ -36,3 +36,13 @@ class ProgramTestRequirement(models.Model):
 
     def __str__(self):
         return f'{self.program.name} - {self.test.name} - Min Grade: {self.minimum_grade}'
+
+
+class Events(models.Model):
+    name = models.CharField(max_length=300)
+    details = models.TextField(max_length=600)
+    date = models.DateTimeField()
+    program = models.ForeignKey(Program, on_delete=models.CASCADE, related_name="events")
+
+    def __str__(self):
+        return self.name
