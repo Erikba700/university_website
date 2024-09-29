@@ -1,5 +1,12 @@
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.views import (
+    PasswordResetView,
+    PasswordResetDoneView,
+    PasswordResetConfirmView,
+    PasswordResetCompleteView,
+)
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy, reverse
@@ -9,6 +16,42 @@ from django.views.generic import FormView, TemplateView
 from programs.models import Events
 from .forms import RegisterForm, UserLoginForm
 from .models import StudentProfile
+
+
+class MyPasswordResetView(PasswordResetView):
+    template_name = "auth/reset_password.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['language_code'] = settings.LANGUAGE_CODE
+        return context
+
+
+class MyPasswordResetDoneView(PasswordResetDoneView):
+    template_name = "auth/password_reset_sent.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['language_code'] = settings.LANGUAGE_CODE
+        return context
+
+
+class MyPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = "auth/password_reset_form.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['language_code'] = settings.LANGUAGE_CODE
+        return context
+
+
+class MyPasswordResetCompleteView(PasswordResetCompleteView):
+    template_name = "auth/password_reset_done.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['language_code'] = settings.LANGUAGE_CODE
+        return context
 
 
 class RegisterView(FormView):
