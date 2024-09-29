@@ -1,0 +1,20 @@
+{% extends 'users/nav_bar.html' %}
+{% load static %}
+{% block image %}<img src="{{ student_data.image.url }}" alt="profileImg">{% endblock %}
+{% block name %}{{student_data.user.username}}{% endblock %}
+{% block content %}
+<div style="text-align: center; margin: 20px 0;">
+    <h2 style="font-weight: bold;">My Events</h2>
+</div>
+
+<div style="text-align: center;">
+    <div style="display: inline-block; text-align: center;">
+        {% for event in student_events %}
+        <a style="display: block; width: 1100px; margin: 0 auto;" class="et-hero-tab"
+           href="{% url 'student:studentEventsDetails' student_data.user.pk event.pk %}">{{ event.name }}</a><br>
+        {% empty %}
+        <p>No events found.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

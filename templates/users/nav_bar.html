@@ -5,6 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{% static 'css/student_navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/listing.css' %}">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student</title>
@@ -76,26 +78,26 @@
         </li>
         <li>
             <div class="iocn-link">
-                <a href="#">
+                <a href="{% url 'student:studentEvents' student_data.user.pk %}">
                     <i class='bx bx-plug'></i>
                     <span class="link_name">Events</span>
                 </a>
                 <i class='bx bxs-chevron-down arrow'></i>
             </div>
             <ul class="sub-menu">
-                <li><a class="link_name" href="#">Events</a></li>
+                <li><a class="link_name" href="{% url 'student:studentEvents' student_data.user.pk %}">Events</a></li>
                 <li><a href="#">UI Face</a></li>
                 <li><a href="#">Pigments</a></li>
                 <li><a href="#">Box Icons</a></li>
             </ul>
         </li>
         <li>
-            <a href="#">
+            <a href="{% url 'student:studentAllEvents' student_data.user.pk %}">
                 <i class='bx bx-compass'></i>
                 <span class="link_name">Explore</span>
             </a>
             <ul class="sub-menu blank">
-                <li><a class="link_name" href="#">Explore</a></li>
+                <li><a class="link_name" href="{% url 'student:studentAllEvents' student_data.user.pk %}">Explore</a></li>
             </ul>
         </li>
         <li>
@@ -129,14 +131,14 @@
             </div>
         </li>
     </ul>
-    {% block content %}
-    {% endblock %}
 </div>
 <section class="home-section">
     <div class="home-content">
         <i class='bx bx-menu'></i>
         <span class="text"></span>
     </div>
+    {% block content %}
+    {% endblock %}
 </section>
 
 <div class="one"></div>
