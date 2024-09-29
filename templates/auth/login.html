@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Custom Styles -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card-header {
+            background-color: #343a40;
+            color: white;
+        }
+        .error {
+            padding: 12px 24px;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h2>{% if language_code == 'ru' %}Modatech AI{% else %}Garderobo AI{% endif %}<br/>Merchandising
+                        Platform</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        <!-- Username Field -->
+                        <div class="form-group">
+                            <input type="text" name="username" class="form-control" id="id_username"
+                                   placeholder="{% if language_code == 'ru' %}Email{% else %}Email address{% endif %}">
+                        </div>
+                        <!-- Password Field -->
+                        <div class="form-group">
+                            <input type="password" name="password" class="form-control" id="id_password"
+                                   placeholder="{% if language_code == 'ru' %}Пароль{% else %}Password{% endif %}">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block"
+                                style="background: #FFA3E5; color: #fff; border: none;">{% if language_code == 'ru' %}
+                            Войти{% else %}Login{% endif %}
+                        </button>
+                    </form>
+                    <br>
+                    <p><a href="{% url 'reset_password' %}">{% if language_code == 'ru' %}Восстановить пароль!{% else %}
+                        Forgot password!{% endif %}</a></p>
+                </div>
+                {% if messages %}
+                    {% if language == "en-us" %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                            {% elif language == "ru" %}
+                            {% for message in messages %}
+                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>Ошибка авторизации:
+                                    неправильный логин или пароль.
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap JS (optional) -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
