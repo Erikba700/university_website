@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details</title>
+    <link rel="stylesheet" href="{% static 'css/additionButton.css' %}">
+    <link rel="stylesheet" href="{% static 'css/event_details.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nonClickableButtons.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="event-container">
+    <h1 class="event-name">{{ event.name }}</h1>
+    <p class="event-date">{{ event.date }}</p>
+    <div class="event-details">
+        <h3>Details:</h3>
+        <p>
+            {{ event.details }}
+        </p>
+    </div>
+    {% block content %}
+    {% endblock %}
+    {% block return %}
+    {% endblock %}
+</div>
+
+<script src="{% static 'js/redirect.js' %}" defer></script>
+</body>
+</html>

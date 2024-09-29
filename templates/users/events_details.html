@@ -1,0 +1,17 @@
+{% extends 'main/events/events_details.html' %}
+{% block content %}
+    <div style="text-align: center;">
+
+        {% if is_joined %}
+            <form method="POST">
+                {% csrf_token %}
+                <button class="btn btn-outline-secondary" type="submit" name="leave">Leave Event</button>
+            </form>
+        {% else %}
+            <form method="POST">
+                {% csrf_token %}
+                <button class="btn btn-outline-secondary" type="submit" name="join">Join Event</button>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}
