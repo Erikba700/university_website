@@ -1,20 +1,21 @@
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404
-from django.urls import reverse_lazy, reverse
-from django.views import View
-from django.views.generic import FormView, TemplateView
-
-from .forms import RegisterForm, UserLoginForm
-from .models import StudentProfile
 from django.contrib.auth.views import (
     PasswordResetView,
     PasswordResetDoneView,
     PasswordResetConfirmView,
     PasswordResetCompleteView,
 )
-from django.conf import settings
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy, reverse
+from django.views import View
+from django.views.generic import FormView, TemplateView
+
+from programs.models import Events
+from .forms import RegisterForm, UserLoginForm
+from .models import StudentProfile
 
 
 class MyPasswordResetView(PasswordResetView):
@@ -24,6 +25,7 @@ class MyPasswordResetView(PasswordResetView):
         context = super().get_context_data(**kwargs)
         context['language_code'] = settings.LANGUAGE_CODE
         return context
+
 
 class MyPasswordResetDoneView(PasswordResetDoneView):
     template_name = "auth/password_reset_sent.html"
@@ -96,8 +98,22 @@ class UserLogoutView(View):
         return HttpResponseRedirect(reverse('static_webpages:main'))
 
 
-class StudentMainPageView(TemplateView):
-    model = StudentProfile
+class StudentProfileMixin:
+    def get_student_profile(self):
+        user_pk = self.kwargs.get('pk')
+        return get_object_or_404(StudentProfile, user_id=user_pk)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['student_data'] = self.get_student_profile()
+        return context
+
+
+class StudentNavBar(StudentProfileMixin, TemplateView):
+    template_name = "users/nav_bar.html"
+
+
+class StudentMainPageView(StudentProfileMixin, TemplateView):
     template_name = "users/student_main.html"
 
     def get_context_data(self, **kwargs):
@@ -110,5 +126,46 @@ class StudentMainPageView(TemplateView):
         return context
 
 
-class StudentCalendarPageView(TemplateView):
-    template_name = "users/calendar.html"
+class StudentEventsPageView(StudentProfileMixin, TemplateView):
+    template_name = "users/events.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        student_profile = context['student_data']
+        context['student_events'] = student_profile.events.all()
+        return context
+
+
+class EventDetailView(View):
+    def get(self, request, student_pk, event_pk):
+        event = get_object_or_404(Events, pk=event_pk)
+        student_profile = get_object_or_404(StudentProfile, user_id=student_pk)
+        is_joined = event in student_profile.events.all()
+
+        context = {
+            'event': event,
+            'is_joined': is_joined,
+        }
+        return render(request, 'users/events_details.html', context)
+
+    def post(self, request, student_pk, event_pk):
+        event = get_object_or_404(Events, pk=event_pk)
+        student_profile = get_object_or_404(StudentProfile, user_id=student_pk)
+
+        if 'join' in request.POST:
+            student_profile.events.add(event)
+        elif 'leave' in request.POST:
+            student_profile.events.remove(event)
+
+        return redirect('student:studentEvents', pk=student_pk)
+
+
+class StudentAllEventsPageView(StudentProfileMixin, TemplateView):
+    template_name = "users/all_events.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        all_events = Events.objects.all()
+        context['all_events'] = all_events
+
+        return context

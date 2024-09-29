@@ -46,3 +46,15 @@ class Events(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Courses(models.Model):
+    name = models.CharField(max_length=300)
+    details = models.TextField(max_length=600)
+    duration = models.PositiveIntegerField()
+    programs = models.ManyToManyField(Program, related_name="program")
+    credit = models.PositiveIntegerField(default=4)
+    grade = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return self.name
