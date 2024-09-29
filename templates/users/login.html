@@ -19,8 +19,6 @@
                         <form method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             {{ form | crispy }}
-                            <p><a href="{% url 'student:reset_password' %}">{% if language_code == 'ru' %}Восстановить пароль!{% else %}
-                            Forgot password!{% endif %}</a></p>
                             <button type="submit" class="btn btn-outline-dark" id="returnButton" data-url="{% url 'static_webpages:main' %}">Log in</button>
                             <a href="{% url 'static_webpages:main' %}" class="btn btn-outline-dark">Cancel</a>
                             <a href="{% url 'student:registration' %}" style="float: right" class="btn btn-outline-dark">Sign up</a>
