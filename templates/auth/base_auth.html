@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Login{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Custom Styles -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .card-header {
+            background-color: #343a40;
+            color: white;
+        }
+
+        .error {
+            padding: 12px 24px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h2>Blank university<br/></h2>
+                </div>
+
+                {% block content %}
+
+                {% endblock %}
+     
+            </div>
+            {% if messages %}
+                {% if language == "en" %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                        {% elif language == "ru" %}
+                        {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>Ошибка авторизации:
+                                неправильный логин или пароль.
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Bootstrap JS (optional) -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+
+
+            
