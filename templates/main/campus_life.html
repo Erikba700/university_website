@@ -25,9 +25,9 @@
     <section class="et-slide" id="tab-campus-events">
         <h1>Campus Events 🎉</h1><br>
         <div class="content-container">
-            <button class="button-85" role="button" style="width:250px;"> • Freshers' Week • </button><br><br>
-            <button class="button-85" role="button" style="width:250px;"> • Annual Cultural Fest • </button><br><br>
-            <button class="button-85" role="button" style="width:250px;"> • Sports Day • </button>
+            {% for event in events %}
+            <a href="{% url 'static_webpages:events' event.pk %}"><button class="button-85" role="button" style="width:250px;"> • {{event.name}} • </button></a><br><br>
+            {% endfor %}
         </div>
     </section>
     <section class="et-slide" id="tab-clubs">
