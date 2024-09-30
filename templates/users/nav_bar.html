@@ -20,42 +20,27 @@
     </div>
     <ul class="nav-links">
         <li>
-            <a href="#">
+            <a href="{% url 'student:studentAllCourses' student_data.user.pk %}">
                 <i class='bx bx-grid-alt'></i>
-                <span class="link_name">Dashboard</span>
+                <span class="link_name">All Courses</span>
             </a>
             <ul class="sub-menu blank">
-                <li><a class="link_name" href="#">Category</a></li>
-            </ul>
-        </li>
-        <li>
-            <div class="iocn-link">
-                <a href="#">
-                    <i class='bx bx-collection'></i>
-                    <span class="link_name">Category</span>
-                </a>
-                <i class='bx bxs-chevron-down arrow'></i>
-            </div>
-            <ul class="sub-menu">
-                <li><a class="link_name" href="#">Category</a></li>
-                <li><a href="#">HTML & CSS</a></li>
-                <li><a href="#">JavaScript</a></li>
-                <li><a href="#">PHP & MySQL</a></li>
+                <li><a class="link_name" href="{% url 'student:studentAllCourses' student_data.user.pk %}">All Courses</a></li>
             </ul>
         </li>
         <li>
             <div class="iocn-link">
                 <a href="#">
                     <i class='bx bx-book-alt'></i>
-                    <span class="link_name">Posts</span>
+                    <span class="link_name">My Courses</span>
                 </a>
                 <i class='bx bxs-chevron-down arrow'></i>
             </div>
             <ul class="sub-menu">
-                <li><a class="link_name" href="#">Posts</a></li>
-                <li><a href="#">Web Design</a></li>
-                <li><a href="#">Login Form</a></li>
-                <li><a href="#">Card Design</a></li>
+                <li><a class="link_name" href="#">My Courses</a></li>
+                {% for course in student_courses %}
+                    <li><a href="{% url 'student:studentCoursesDetails' student_data.user.pk course.pk %}">{{course.name}}</a></li>
+                {% endfor %}
             </ul>
         </li>
         <li>
@@ -86,9 +71,9 @@
             </div>
             <ul class="sub-menu">
                 <li><a class="link_name" href="{% url 'student:studentEvents' student_data.user.pk %}">Events</a></li>
-                <li><a href="#">UI Face</a></li>
-                <li><a href="#">Pigments</a></li>
-                <li><a href="#">Box Icons</a></li>
+                {% for event in student_events %}
+                    <li><a href="{% url 'student:studentEventsDetails' student_data.user.pk event.pk %}">{{event.name}}</a></li>
+                {% endfor %}
             </ul>
         </li>
         <li>
@@ -121,10 +106,10 @@
         <li>
             <div class="profile-details">
                 <div class="profile-content">
-                    {% block image %}{% endblock %}
+                    <img src="{{ student_data.image.url }}" alt="profileImg">
                 </div>
                 <div class="name-job">
-                    <div class="profile_name">{% block name %}{% endblock %}</div>
+                    <div class="profile_name">{{student_data.user.username}}</div>
                     <div class="job">Student</div>
                 </div>
                 <a href="{% url 'student:logout' %}"><i class='bx bx-log-out'></i></a>

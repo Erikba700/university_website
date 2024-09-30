@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ course.name }} - Course Details</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .course-header {
+            background-color: #343a40;
+            color: #fff;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .card {
+            margin-top: 20px;
+        }
+        .card-header {
+            background-color: #343a40;
+            color: white;
+        }
+        .btn-custom {
+            background-color: #343a40;
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: #fff;
+        }
+        ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="course-header">
+        <h1>{{ course.name }}</h1>
+        <p class="lead">Course Details</p>
+    </div>
+
+    <div class="container mt-5">
+        <!-- Course Information -->
+        <div class="card shadow">
+            <div class="card-header">
+                <h4>Course Overview</h4>
+            </div>
+            <div class="card-body">
+                <p><strong>Details:</strong> {{ course.details }}</p>
+                <p><strong>Duration:</strong> {{ course.duration }} semesters</p>
+                <p><strong>Credit:</strong> {{ course.credit }} credits</p>
+                <p><strong>Grade:</strong> Minimum Grade: {{ course.grade }}</p>
+            </div>
+        </div>
+
+        <div class="card shadow mt-4">
+            <div class="card-header">
+                <h4>Associated Programs</h4>
+            </div>
+            <div class="card-body">
+                <ul>
+                    {% for program in course.programs.all %}
+                        <li>{{ program.name }}</li>
+                    {% empty %}
+                        <p>No programs associated with this course.</p>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="card shadow mt-4">
+            <div class="card-header">
+                <h4>Prerequisites</h4>
+            </div>
+            <div class="card-body">
+                <ul>
+                    {% if course.prerequisites.all %}
+                        {% for prerequisite in course.prerequisites.all %}
+                            <li>{{ prerequisite.name }}</li>
+                        {% endfor %}
+                    {% else %}
+                        <li>No prerequisites for this course.</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="text-center mt-5">
+            <form method="POST">
+                {% csrf_token %}
+                {% if is_joined %}
+                    <button type="submit" name="leave" class="btn btn-danger btn-lg">Leave Course</button>
+                {% else %}
+                    <button type="submit" name="join" class="btn btn-success btn-lg">Join Course</button>
+                {% endif %}
+            </form>
+        </div>
+        <div class="text-center mt-5">
+            <a href="{% url 'student:studentAllCourses' student_data.user.pk %}" class="btn btn-custom btn-lg">Back to All Courses</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

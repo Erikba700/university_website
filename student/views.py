@@ -13,7 +13,7 @@ from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import FormView, TemplateView
 
-from programs.models import Events
+from programs.models import Events, Courses
 from .forms import RegisterForm, UserLoginForm
 from .models import StudentProfile
 
@@ -105,7 +105,10 @@ class StudentProfileMixin:
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['student_data'] = self.get_student_profile()
+        student_profile = self.get_student_profile()
+        context['student_data'] = student_profile
+        context['student_courses'] = student_profile.chosen_courses.all()
+        context['student_events'] = student_profile.events.all()
         return context
 
 
@@ -115,15 +118,6 @@ class StudentNavBar(StudentProfileMixin, TemplateView):
 
 class StudentMainPageView(StudentProfileMixin, TemplateView):
     template_name = "users/student_main.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        user_pk = self.kwargs.get('pk')
-        student_profile = get_object_or_404(StudentProfile, user_id=user_pk)
-
-        context['student_data'] = student_profile
-
-        return context
 
 
 class StudentEventsPageView(StudentProfileMixin, TemplateView):
@@ -169,3 +163,39 @@ class StudentAllEventsPageView(StudentProfileMixin, TemplateView):
         context['all_events'] = all_events
 
         return context
+
+
+class AllCourses(StudentProfileMixin, TemplateView):
+    template_name = "users/courses/all_courses.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        all_courses = Courses.objects.all()
+        context['all_courses'] = all_courses
+
+        return context
+
+
+class CourseDetailView(View):
+    def get(self, request, student_pk, course_pk):
+        courses_ = get_object_or_404(Courses, pk=course_pk)
+        student_profile = get_object_or_404(StudentProfile, user_id=student_pk)
+        is_joined = courses_ in student_profile.chosen_courses.all()
+
+        context = {
+            'course': courses_,
+            'is_joined': is_joined,
+            'student_data': student_profile,
+        }
+        return render(request, 'users/courses/course_details.html', context)
+
+    def post(self, request, student_pk, course_pk):
+        courses_ = get_object_or_404(Courses, pk=course_pk)
+        student_profile = get_object_or_404(StudentProfile, user_id=student_pk)
+
+        if 'join' in request.POST:
+            student_profile.chosen_courses.add(courses_)
+        elif 'leave' in request.POST:
+            student_profile.chosen_courses.remove(courses_)
+
+        return redirect('student:studentAllCourses', pk=student_pk)

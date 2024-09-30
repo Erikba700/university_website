@@ -55,6 +55,7 @@ class Courses(models.Model):
     programs = models.ManyToManyField(Program, related_name="program")
     credit = models.PositiveIntegerField(default=4)
     grade = models.PositiveIntegerField(default=1)
+    prerequisites = models.ManyToManyField('self', symmetrical=False, related_name='required_for', blank=True)
 
     def __str__(self):
         return self.name
