@@ -37,11 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'student.apps.StudentConfig',
+    'channels',
     'programs.apps.ProgramsConfig',
     'static_webpages.apps.StaticWebpagesConfig',
     'rest_framework',
     'crispy_forms',
     'crispy_bootstrap4',
+
 ]
 
 MIDDLEWARE = [
@@ -73,6 +75,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'university_website.wsgi.application'
+ASGI_APPLICATION = 'university_website.asgi.application'
+
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases

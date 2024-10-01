@@ -77,37 +77,37 @@ a {
 }
 
 .content-container {
-    max-width: 450px !important; /* Ensure it takes priority */
+    max-width: 450px !important;
     margin: 0 auto !important;
-    padding: 0 20px !important; /* Optional padding */
-    text-align: center; /* Center text if desired */
+    padding: 0 20px !important;
+    text-align: center;
 }
 .btn {
-    border: 1px solid #000; /* Example border color */
-    background-color: transparent; /* Button background */
-    color: #000; /* Text color */
-    padding: 10px 20px; /* Button padding */
-    font-size: 16px; /* Font size */
-    cursor: pointer; /* Pointer cursor */
-    display: inline-block; /* Inline block for button-like appearance */
+    border: 1px solid #000;
+    background-color: transparent;
+    color: #000;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
 }
 
 .btn-outline-dark {
-    border-color: #000; /* Button border color */
+    border-color: #000;
 }
 
 .btn a.button-link {
-    text-decoration: none; /* Remove underline */
-    color: inherit; /* Inherit color from button */
-    display: inline !important; /* Ensure link behaves like text */
+    text-decoration: none;
+    color: inherit;
+    display: inline !important;
 }
 
 .btn:hover a.button-link {
-    color: #fff; /* Ensure text color stays white on hover */
+    color: #fff;
 }
 
 .btn a.button-link:hover {
-    color: #fff; /* Optional: change color on hover */
+    color: #fff;
 }
 
 @media (min-width: 800px) {

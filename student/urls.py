@@ -14,6 +14,8 @@ urlpatterns = [
     path("student-main/<int:student_pk>/events/<int:event_pk>/", views.EventDetailView.as_view(), name="studentEventsDetails"),
     path("student-main/<int:pk>/all-courses/", views.AllCourses.as_view(), name="studentAllCourses"),
     path("student-main/<int:student_pk>/courses/<int:course_pk>/", views.CourseDetailView.as_view(), name="studentCoursesDetails"),
+    path("student-main/<int:student_pk>/chats/", views.StudentMainChatPageView.as_view(), name="studentChatMain"),
+    path("student-main/<int:student_pk>/chat/<str:room_name>/", views.StudentChatView.as_view(), name='chat_room'),
 
     path('reset_password/', views.MyPasswordResetView.as_view(), name='reset_password'),
     path('reset_password_sent/', views.MyPasswordResetDoneView.as_view(), name='password_reset_done'),

@@ -1,3 +1,5 @@
+import random
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
@@ -199,3 +201,30 @@ class CourseDetailView(View):
             student_profile.chosen_courses.remove(courses_)
 
         return redirect('student:studentAllCourses', pk=student_pk)
+
+
+class StudentMainChatPageView(View):
+    def get(self, request, student_pk):
+        student_profile = get_object_or_404(StudentProfile, user_id=student_pk)
+        other_students = StudentProfile.objects.filter(chosen_major=student_profile.chosen_major)
+
+        context = {
+            'other_students': random.sample(list(other_students), 5),
+            'student_data': student_profile,
+        }
+        return render(request, 'users/chats/main_chat_page.html', context)
+
+
+class StudentChatView(TemplateView):
+    template_name = "users/chats/chat_room.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        student_pk = self.kwargs.get('student_pk')
+        room_name = self.kwargs.get('room_name')
+
+        student_profile = get_object_or_404(StudentProfile, user__pk=student_pk)
+
+        context['room_name'] = room_name
+        context['student_data'] = student_profile
+        return context
