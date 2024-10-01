@@ -1,0 +1,48 @@
+{% extends 'users/nav_bar.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/chat_room.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="chat-container">
+    <h2 class="chat-room-title">Room: {{ room_name }}</h2>
+
+    <div id="chat-log" class="chat-log"></div>
+
+    <div class="chat-input-container">
+        <input id="chat-message-input" type="text" placeholder="Enter message" class="chat-input">
+        <button id="chat-message-submit" class="chat-button">Send</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    const roomName = "{{ room_name }}";
+    const studentPk = "{{ student_pk }}";
+
+    const chatSocket = new WebSocket(
+        'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
+    );
+
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        document.querySelector('#chat-log').value += (data.message + '\n');
+    };
+
+    chatSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    document.querySelector('#chat-message-submit').onclick = function(e) {
+        const messageInputDom = document.querySelector('#chat-message-input');
+        const message = messageInputDom.value;
+        chatSocket.send(JSON.stringify({
+            'message': message
+        }));
+        messageInputDom.value = '';
+    };
+</script>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'users/nav_bar.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <header>
+        <input type="text" placeholder="Obtain New Friends..." id="search-box">
+    </header>
+    <div style="text-align: center; margin: 20px 0;">
+        <h2 style="font-weight: bold;">Start chatting with people from your faculty!</h2><br><br>
+    </div>
+    <section class="profiles">
+        {% for another_student in other_students %}
+        {% if another_student.user.pk != student_data.user.pk %}
+        <div class="profile">
+            <img src="{% if another_student.image %}{{ another_student.image.url }}{% else %}{% static 'images/user-profile-icon.jpg' %}{% endif %}"
+                 alt="Profile Picture" class="profile-pic">
+            <p class="name">{{another_student.user.first_name}}</p>
+            <a href="{% url 'student:chat_room' student_data.user.pk student_data.user.first_name|add:'_'|add:another_student.user.first_name %}"><button class="chat-btn" >Start Chat</button></a>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </section>
+</div>
+{% endblock %}

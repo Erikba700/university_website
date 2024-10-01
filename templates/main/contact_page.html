@@ -31,10 +31,10 @@
             <h1>Email ➤</h1><br>
         <div class="content-container">
             {% if user.is_active %}
-            <p>BlankUniversity@yopmail.com</p><br>
+            <p>BlankUniversity@gmail.com</p><br>
             <p><button type="button" class="btn btn-outline-dark"><a href="#" class="button-link">Write a Message</a></button></p>
             {% else %}
-            <p>BlankUniversity@yopmail.com</p><br>
+            <p>BlankUniversity@gmail.com</p><br>
             <p><button type="button" class="btn btn-outline-dark"><a href="{% url 'student:registration' %}" class="button-link">Write a Message</a></button>
             {% endif %}
         </div>
