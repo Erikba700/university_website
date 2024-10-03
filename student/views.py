@@ -9,6 +9,7 @@ from django.contrib.auth.views import (
     PasswordResetConfirmView,
     PasswordResetCompleteView,
 )
+from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
@@ -17,7 +18,7 @@ from django.views.generic import FormView, TemplateView
 
 from programs.models import Events, Courses
 from .forms import RegisterForm, UserLoginForm
-from .models import StudentProfile
+from .models import StudentProfile, ChatMessage, ChatRoom
 
 
 class MyPasswordResetView(PasswordResetView):
@@ -103,11 +104,16 @@ class UserLogoutView(View):
 class StudentProfileMixin:
     def get_student_profile(self):
         user_pk = self.kwargs.get('pk')
-        return get_object_or_404(StudentProfile, user_id=user_pk)
+        profile = get_object_or_404(StudentProfile, user_id=user_pk)
+        if profile.user != self.request.user:
+            return 0
+        return profile
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         student_profile = self.get_student_profile()
+        if student_profile == 0:
+            raise Exception("You are not allowed to see this page!")
         context['student_data'] = student_profile
         context['student_courses'] = student_profile.chosen_courses.all()
         context['student_events'] = student_profile.events.all()
@@ -207,11 +213,16 @@ class StudentMainChatPageView(View):
     def get(self, request, student_pk):
         student_profile = get_object_or_404(StudentProfile, user_id=student_pk)
         other_students = StudentProfile.objects.filter(chosen_major=student_profile.chosen_major)
-
-        context = {
-            'other_students': random.sample(list(other_students), 5),
-            'student_data': student_profile,
-        }
+        if len(list(other_students)) > 5:
+            context = {
+                'other_students': random.sample(list(other_students), 5),
+                'student_data': student_profile,
+            }
+        else:
+            context = {
+                'other_students': other_students,
+                'student_data': student_profile,
+            }
         return render(request, 'users/chats/main_chat_page.html', context)
 
 
@@ -225,6 +236,25 @@ class StudentChatView(TemplateView):
 
         student_profile = get_object_or_404(StudentProfile, user__pk=student_pk)
 
-        context['room_name'] = room_name
+        normalized_room_name = self.normalize_room_name(room_name)
+
+        chat_room = ChatRoom.objects.filter(name=normalized_room_name).first()
+
+        if not chat_room:
+            chat_room = ChatRoom.objects.create(name=normalized_room_name)
+
+        messages = ChatMessage.objects.filter(room=chat_room).order_by('timestamp')
+
+        context['room_name'] = normalized_room_name
+        context['student_pk'] = student_pk
         context['student_data'] = student_profile
+        context['messages'] = messages
+
         return context
+
+    def normalize_room_name(self, room_name):
+        participants = room_name.split('_')
+        participants.sort()
+        return '_'.join(participants)
+
+

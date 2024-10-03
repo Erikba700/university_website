@@ -39,3 +39,20 @@ class StudentProfile(models.Model):
 def post_save_student(instance, created, **kwargs):
     if created and not hasattr(instance, 'studentprofile'):
         StudentProfile.objects.create(user=instance)
+
+
+class ChatRoom(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.name}"
+
+
+class ChatMessage(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user.username}: {self.text}"
