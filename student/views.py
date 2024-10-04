@@ -1,27 +1,33 @@
+import json
 import random
 
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import (
     PasswordResetView,
     PasswordResetDoneView,
     PasswordResetConfirmView,
     PasswordResetCompleteView,
 )
-from django.db.models import Q
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
 from django.views import View
-from django.views.generic import FormView, TemplateView
+from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import FormView, TemplateView, ListView, UpdateView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from programs.models import Events, Courses
-from .forms import RegisterForm, UserLoginForm
+from .forms import RegisterForm, UserLoginForm, StudentProfileSearchForm, UserUpdateForm, StudentProfileUpdateForm
 from .models import StudentProfile, ChatMessage, ChatRoom
 
 
 class MyPasswordResetView(PasswordResetView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     template_name = "auth/reset_password.html"
 
     def get_context_data(self, **kwargs):
@@ -69,6 +75,8 @@ class RegisterView(FormView):
 
 
 class UserLoginView(FormView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     form_class = UserLoginForm
     template_name = 'users/login.html'
 
@@ -258,3 +266,84 @@ class StudentChatView(TemplateView):
         return '_'.join(participants)
 
 
+@csrf_exempt
+@login_required
+def save_firebase_token(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        token = data.get('token')
+
+        profile = StudentProfile.objects.get(user=request.user)
+        profile.firebase_token = token
+        profile.save()
+
+        return JsonResponse({'status': 'token saved'})
+
+
+class StudentProfileSearchView(ListView):
+    model = StudentProfile
+    template_name = 'users/chats/search_results.html'
+    context_object_name = 'profiles'
+
+    def get_queryset(self):
+        queryset = StudentProfile.objects.all()
+
+        query = self.request.GET.get('query', '')
+
+        if query:
+            queryset = queryset.filter(
+                user__username__icontains=query
+            ) | queryset.filter(
+                user__first_name__icontains=query
+            ) | queryset.filter(
+                user__last_name__icontains=query
+            ) | queryset.filter(
+                chosen_major__name__icontains=query
+            )
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        student_pk = self.kwargs.get('student_pk')
+        student_data = get_object_or_404(StudentProfile, user_id=student_pk)
+        context['student_data'] = student_data
+
+        context['form'] = StudentProfileSearchForm(self.request.GET or None)
+
+        return context
+
+
+class ProfileSettingsView(UpdateView):
+    model = StudentProfile
+    template_name = 'users/profile_settings.html'
+    context_object_name = 'student_profile'
+    form_class = StudentProfileUpdateForm
+
+    def get_object(self, queryset=None):
+        student_profile = get_object_or_404(StudentProfile, user=self.request.user)
+        return student_profile
+
+    def get_success_url(self):
+        return reverse_lazy('student:profile_settings', kwargs={'student_pk': self.object.user.id})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        student_pk = self.kwargs.get('student_pk')
+        student_data = get_object_or_404(StudentProfile, user_id=student_pk)
+        context['student_data'] = student_data
+        context['user_form'] = UserUpdateForm(instance=self.object.user)
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        user_form = UserUpdateForm(request.POST, instance=self.object.user)
+        profile_form = StudentProfileUpdateForm(request.POST, request.FILES, instance=self.object)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return super().form_valid(profile_form)
+
+        return self.form_invalid(profile_form)

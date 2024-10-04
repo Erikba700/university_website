@@ -1,6 +1,5 @@
 let events = [];
 
-// letiables to store event input fields and reminder list
 let eventDateInput =
     document.getElementById("eventDate");
 let eventTitleInput =
@@ -10,17 +9,14 @@ let eventDescriptionInput =
 let reminderList =
     document.getElementById("reminderList");
 
-// Counter to generate unique event IDs
 let eventIdCounter = 1;
 
-// Function to add events
 function addEvent() {
     let date = eventDateInput.value;
     let title = eventTitleInput.value;
     let description = eventDescriptionInput.value;
 
     if (date && title) {
-        // Create a unique event ID
         let eventId = eventIdCounter++;
 
         events.push(
@@ -38,22 +34,18 @@ function addEvent() {
     }
 }
 
-// Function to delete an event by ID
 function deleteEvent(eventId) {
-    // Find the index of the event with the given ID
     let eventIndex =
         events.findIndex((event) =>
             event.id === eventId);
 
     if (eventIndex !== -1) {
-        // Remove the event from the events array
         events.splice(eventIndex, 1);
         showCalendar(currentMonth, currentYear);
         displayReminders();
     }
 }
 
-// Function to display reminders
 function displayReminders() {
     reminderList.innerHTML = "";
     for (let i = 0; i < events.length; i++) {
@@ -69,7 +61,6 @@ function displayReminders() {
             ${event.description} on
             ${eventDate.toLocaleDateString()}`;
 
-            // Add a delete button for each reminder item
             let deleteButton =
                 document.createElement("button");
             deleteButton.className = "delete-event";
@@ -84,8 +75,6 @@ function displayReminders() {
     }
 }
 
-// Function to generate a range of
-// years for the year select input
 function generate_year_range(start, end) {
     let years = "";
     for (let year = start; year <= end; year++) {
@@ -95,7 +84,6 @@ function generate_year_range(start, end) {
     return years;
 }
 
-// Initialize date-related letiables
 today = new Date();
 currentMonth = today.getMonth();
 currentYear = today.getFullYear();
@@ -140,7 +128,6 @@ monthAndYear =
     document.getElementById("monthAndYear");
 showCalendar(currentMonth, currentYear);
 
-// Function to navigate to the next month
 function next() {
     currentYear = currentMonth === 11 ?
         currentYear + 1 : currentYear;
@@ -148,7 +135,6 @@ function next() {
     showCalendar(currentMonth, currentYear);
 }
 
-// Function to navigate to the previous month
 function previous() {
     currentYear = currentMonth === 0 ?
         currentYear - 1 : currentYear;
@@ -157,14 +143,12 @@ function previous() {
     showCalendar(currentMonth, currentYear);
 }
 
-// Function to jump to a specific month and year
 function jump() {
     currentYear = parseInt(selectYear.value);
     currentMonth = parseInt(selectMonth.value);
     showCalendar(currentMonth, currentYear);
 }
 
-// Function to display the calendar
 function showCalendar(month, year) {
     let firstDay = new Date(year, month, 1).getDay();
     tbl = document.getElementById("calendar-body");
@@ -219,7 +203,6 @@ function showCalendar(month, year) {
     displayReminders();
 }
 
-// Function to create an event tooltip
 function createEventTooltip(date, month, year) {
     let tooltip = document.createElement("div");
     tooltip.className = "event-tooltip";
@@ -237,7 +220,6 @@ function createEventTooltip(date, month, year) {
     return tooltip;
 }
 
-// Function to get events on a specific date
 function getEventsOnDate(date, month, year) {
     return events.filter(function (event) {
         let eventDate = new Date(event.date);
@@ -249,15 +231,12 @@ function getEventsOnDate(date, month, year) {
     });
 }
 
-// Function to check if there are events on a specific date
 function hasEventOnDate(date, month, year) {
     return getEventsOnDate(date, month, year).length > 0;
 }
 
-// Function to get the number of days in a month
 function daysInMonth(iMonth, iYear) {
     return 32 - new Date(iYear, iMonth, 32).getDate();
 }
 
-// Call the showCalendar function initially to display the calendar
 showCalendar(currentMonth, currentYear);

@@ -48,9 +48,11 @@
     </div>
     <div class="float">
         <i class="my-float">+</i>
-        <div class="login-option">
-            <a href="/login">login</a>
-        </div>
+        <a href="{% url 'student:login' %}">
+            <div class="login-option">
+                login
+            </div>
+        </a>
     </div>
     <div class="return-arrow" id="returnButton" data-url="{% url 'static_webpages:main' %}">
         <i class="my-float">←</i>

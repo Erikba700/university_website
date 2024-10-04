@@ -1,2 +1,18 @@
 {% extends 'users/nav_bar.html' %}
 {% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/studentMain.css' %}">
+{% endblock %}
+{% block content %}
+<div class="welcome-container">
+    <h1>Welcome to Your Profile, {{ student_data.user.first_name }}!</h1>
+    <p>We're glad to have you here. This is your personal space to manage your profile, courses, and more.</p>
+
+    <div class="nav-links">
+        <a href="{% url 'student:profile_settings' student_data.user.pk %}" class="nav-button">Profile Settings</a>
+        <a href="{% url 'student:studentChatMain' student_data.user.pk %}" class="nav-button">Chat</a>
+        <a href="{% url 'student:studentAllCourses' student_data.user.pk %}" class="nav-button">My Courses</a>
+        <a href="{% url 'student:studentEvents' student_data.user.pk %}" class="nav-button">Events</a>
+    </div>
+</div>
+{% endblock %}

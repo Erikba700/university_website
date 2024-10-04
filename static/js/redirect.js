@@ -4,6 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const redirectUrl = returnButton.getAttribute('data-url');
 
     returnButton.addEventListener('click', function() {
-        window.location.href = redirectUrl; // Redirect to the specified URL
+        window.location.href = redirectUrl;
     });
 });

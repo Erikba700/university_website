@@ -2,8 +2,8 @@ from django import forms
 from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.utils.crypto import get_random_string
 from django.core.mail import send_mail
+from django.utils.crypto import get_random_string
 
 from programs.models import Program
 from student.models import StudentProfile
@@ -50,3 +50,19 @@ class RegisterForm(UserCreationForm):
 class UserLoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
+
+
+class StudentProfileSearchForm(forms.Form):
+    query = forms.CharField(max_length=100, required=False, label='Search')
+
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+
+
+class StudentProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = StudentProfile
+        fields = ['image', 'chosen_major', 'chosen_courses']

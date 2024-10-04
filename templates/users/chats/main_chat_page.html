@@ -3,7 +3,10 @@
 {% block content %}
 <div class="container">
     <header>
-        <input type="text" placeholder="Obtain New Friends..." id="search-box">
+        <form method="GET" action="{% url 'student:search_student_profiles' student_data.user.pk %}">
+            <input type="text" placeholder="Search for friends..." id="search-box" name="query" value="{{ request.GET.query }}"><br>
+            <button type="submit" class="chat-btn" style="display: block; margin: 0 auto; margin-top: 10px;">Search</button>
+        </form>
     </header>
     <div style="text-align: center; margin: 20px 0;">
         <h2 style="font-weight: bold;">Start chatting with people from your faculty!</h2><br><br>

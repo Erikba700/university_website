@@ -20,6 +20,7 @@ def validate_admission_year(value):
 
 class StudentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    firebase_token = models.CharField(max_length=255, blank=True, null=True)
     admission_year = models.IntegerField(
         null=True,
         blank=True,

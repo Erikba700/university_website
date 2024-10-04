@@ -1,25 +1,25 @@
 .et-hero-tabs-container {
     display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    align-items: center; /* Center them horizontally */
+    flex-direction: column;
+    align-items: center;
 }
 
 .et-hero-tabs {
-    background-color: #f4f4f4; /* Ensure consistent background color */
+    background-color: #f4f4f4;
     padding: 20px 0;
-    position: relative; /* Position for the floating button */
+    position: relative;
 }
 
 .float {
-    position: absolute; /* Position relative to its container */
+    position: absolute;
     right: 20px;
-    bottom: 20px; /* Adjust as necessary */
-    background-color: transparent; /* Ensure no background color around the button */
+    bottom: 20px;
+    background-color: transparent;
     z-index: 10;
 }
 
 .return-arrow {
-    position: absolute; /* Position relative to container */
+    position: absolute;
     left: 20px;
     bottom: 20px;
     z-index: 10;
@@ -30,8 +30,8 @@
     flex-direction: column;
     align-items: center;
     padding: 0;
-    margin: 0; /* Ensure no extra margins */
-    background-color: #f4f4f4; /* Match this with the section background */
+    margin: 0;
+    background-color: #f4f4f4;
 }
 
 .et-hero-tab {
@@ -45,11 +45,10 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Fix button hover effects */
 .return-arrow:hover, .float:hover {
     background-color: #000;
     color: #000;
 }
 .et-hero-tab:hover {
-    transform: scale(1.05); /* Add a hover effect */
+    transform: scale(1.05);
 }

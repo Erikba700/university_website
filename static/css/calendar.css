@@ -9,7 +9,7 @@ body {
     margin: 15px auto;
 }
 
-/* Calendar container */
+
 .container-calendar {
     background: #ffffff;
     padding: 15px;
@@ -21,7 +21,7 @@ body {
     justify-content: space-between;
 }
 
-/* Event section styling */
+
 #event-section {
     padding: 10px;
     background: #f5f5f5;
@@ -74,7 +74,6 @@ body {
     left: 0;
 }
 
-/* event tooltip styling */
 .event-tooltip {
     position: absolute;
     background-color: rgba(234, 232, 232, 0.763);
@@ -94,7 +93,6 @@ body {
     display: block;
 }
 
-/* Reminder section styling */
 #reminder-section {
     padding: 10px;
     background: #f5f5f5;
@@ -118,7 +116,6 @@ body {
     font-size: 16px;
 }
 
-/* Style for the delete buttons */
 .delete-event {
     background: rgb(237, 19, 19);
     color: white;
@@ -129,7 +126,6 @@ body {
     align-items: right;
 }
 
-/* Buttons in the calendar */
 .button-container-calendar button {
     cursor: pointer;
     background: green;
@@ -139,7 +135,6 @@ body {
     padding: 5px 10px;
 }
 
-/* Calendar table */
 .table-calendar {
     border-collapse: collapse;
     width: 100%;
@@ -153,7 +148,7 @@ body {
     vertical-align: top;
 }
 
-/* Date picker */
+
 .date-picker.selected {
     background-color: #f2f2f2;
     font-weight: bold;
@@ -164,31 +159,25 @@ body {
     border-bottom: 2px solid currentColor;
 }
 
-/* Day-specific styling */
 .date-picker:nth-child(1) {
     color: red;
-    /* Sunday */
 }
 
 .date-picker:nth-child(6) {
     color: green;
-    /* Friday */
 }
 
-/* Hover effect for date cells */
 .date-picker:hover {
     background-color: green;
     color: white;
     cursor: pointer;
 }
 
-/* Header for month and year */
 #monthAndYear {
     text-align: center;
     margin-top: 0;
 }
 
-/* Navigation buttons */
 .button-container-calendar {
     position: relative;
     margin-bottom: 1em;
@@ -204,7 +193,6 @@ body {
     float: right;
 }
 
-/* Footer styling */
 .footer-container-calendar {
     margin-top: 1em;
     border-top: 1px solid #dadada;

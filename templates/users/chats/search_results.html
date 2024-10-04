@@ -1,0 +1,26 @@
+{% extends 'users/nav_bar.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <header>
+        <form method="GET" action="{% url 'student:search_student_profiles' student_data.user.pk %}">
+            <input type="text" placeholder="Search for friends..." id="search-box" name="query" value="{{ request.GET.query }}"><br>
+            <button type="submit" class="chat-btn" style="display: block; margin: 0 auto; margin-top: 10px;">Search</button>
+        </form>
+    </header>
+    <section class="profiles">
+    {% for profile in profiles %}
+        {% if another_student.user.pk != student_data.user.pk %}
+        <div class="profile">
+            <img src="{% if profile.image %}{{ profile.image.url }}{% else %}{% static 'images/user-profile-icon.jpg' %}{% endif %}"
+                 alt="Profile Picture" class="profile-pic">
+            <p class="name">{{profile.user.first_name}}</p>
+            <a href="{% url 'student:chat_room' student_data.user.pk student_data.user.first_name|add:'_'|add:profile.user.first_name %}"><button class="chat-btn" >Start Chat</button></a>
+        </div>
+        {% endif %}
+    {% empty %}
+        <li>No profiles found.</li>
+    {% endfor %}
+    </section>
+</div>
+{% endblock %}

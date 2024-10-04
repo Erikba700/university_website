@@ -14,6 +14,7 @@
         {% for message in messages %}
             <div class="message-box" data-id="{{ message.id }}">
                 <div class="message-content">
+                    <strong>{{ message.user.first_name }}</strong>
                     <p>{{ message.text }}</p>
                     <span class="timestamp">{{ message.timestamp|date:"H:i:s" }}</span>
                     <span class="message-options">
@@ -33,8 +34,8 @@
     </div>
 </div>
 {% endblock %}
-
 {% block extra_scripts %}
+<script type="module" src="{% static 'js/fireBasePushNotifications.js' %}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const roomName = "{{ room_name }}";
@@ -69,7 +70,20 @@
                 chatSocket.send(JSON.stringify({
                     'message': message
                 }));
-
+                fetch('/send-notification/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    body: JSON.stringify({
+                        'registration_id': '{{ recipient_registration_id }}',  // Recipient's Firebase token
+                        'title': 'New message from {{ request.user.first_name }}',
+                        'body': message
+                    })
+                }).then(response => response.json())
+                  .then(data => console.log('Notification sent:', data))
+                  .catch(error => console.error('Error sending notification:', error));
                 input.value = '';
                 input.focus();
             }
@@ -128,6 +142,7 @@
         }
 
         input.focus();
+
     });
 
 </script>

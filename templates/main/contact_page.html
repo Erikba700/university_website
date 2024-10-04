@@ -6,9 +6,13 @@
     <title>BlankUniversity</title>
     <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
     <link rel="stylesheet" href="{% static 'css/additionButton.css' %}">
+    <link rel="stylesheet" href="{% static 'css/emailForm.css' %}">
     <link rel="shortcut icon" href="{% static 'favicon/favicon.ico' %}" type="image/x-icon">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
 </head>
 <body>
 <section class="et-hero-tabs">
@@ -31,13 +35,22 @@
     <section class="et-slide" id="tab-email">
             <h1>Email ➤</h1><br>
         <div class="content-container">
-            {% if user.is_active %}
             <p>BlankUniversity@gmail.com</p><br>
-            <p><button type="button" class="btn btn-outline-dark"><a href="#" class="button-link">Write a Message</a></button></p>
-            {% else %}
-            <p>BlankUniversity@gmail.com</p><br>
-            <p><button type="button" class="btn btn-outline-dark"><a href="{% url 'student:registration' %}" class="button-link">Write a Message</a></button>
-            {% endif %}
+            <div class="form-container">
+                <h2>Contact Us</h2>
+                <form id="myForm">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" required>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="feedback">Letter:</label>
+                    <textarea id="feedback" required></textarea>
+
+                    <button type="submit">Send Feedback</button>
+                </form>
+            </div>
         </div>
     </section>
     <section class="et-slide" id="tab-socials">
@@ -49,15 +62,18 @@
         </div>
     </section>
     <div class="float">
-            <i class="my-float">+</i>
+        <i class="my-float">+</i>
+        <a href="{% url 'student:login' %}">
             <div class="login-option">
-                    <a href="/login">login</a>
+                login
             </div>
-        </div>
+        </a>
+    </div>
     <div class="return-arrow" id="returnButton" data-url="{% url 'static_webpages:main' %}">
         <i class="my-float">←</i>
     </div>
 </main>
+<script src="{% static 'js/emailjs.js' %}" defer ></script>
 <script src="{% static 'js/navbar.js' %}" defer></script>
 <script src="{% static 'js/redirect.js' %}" defer></script>
 </body>

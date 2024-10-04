@@ -1,0 +1,39 @@
+{% extends 'users/nav_bar.html' %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/profileSettings.css' %}">
+{% endblock %}
+{% block content %}
+<div class="profile-settings-container">
+    <h1>Profile Settings</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_first_name">First Name:</label>
+            {{ user_form.first_name }}
+        </div>
+        <div class="form-group">
+            <label for="id_last_name">Last Name:</label>
+            {{ user_form.last_name }}
+        </div>
+        <div class="form-group">
+            <label for="id_email">Email:</label>
+            {{ user_form.email }}
+        </div>
+        <div class="form-group">
+            <label for="id_image">Profile Picture:</label>
+            {{ student_profile.image.url }}
+            {{ student_profile.image }}
+        </div>
+        <div class="form-group">
+            <label for="id_chosen_major">Chosen Major:</label>
+            {{ student_profile.chosen_major }}
+        </div>
+        <div class="form-group">
+            <label for="id_chosen_courses">Chosen Courses:</label>
+            {{ student_profile.chosen_courses }}
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</div>
+{% endblock %}

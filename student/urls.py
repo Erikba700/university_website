@@ -16,6 +16,9 @@ urlpatterns = [
     path("student-main/<int:student_pk>/courses/<int:course_pk>/", views.CourseDetailView.as_view(), name="studentCoursesDetails"),
     path("student-main/<int:student_pk>/chats/", views.StudentMainChatPageView.as_view(), name="studentChatMain"),
     path("student-main/<int:student_pk>/chat/<str:room_name>/", views.StudentChatView.as_view(), name='chat_room'),
+    path('save-firebase-token/', views.save_firebase_token, name='save_firebase_token'),
+    path('student-main/<int:student_pk>/chat-search/', views.StudentProfileSearchView.as_view(), name='search_student_profiles'),
+    path('student-main/<int:student_pk>/settings/', views.ProfileSettingsView.as_view(), name='profile_settings'),
 
     path('reset_password/', views.MyPasswordResetView.as_view(), name='reset_password'),
     path('reset_password_sent/', views.MyPasswordResetDoneView.as_view(), name='password_reset_done'),
